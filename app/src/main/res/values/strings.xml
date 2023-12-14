@@ -3,6 +3,7 @@
     <string name="note_edit">Edit Note</string>
     <string name="note_title">Note title</string>
     <string name="note_label">Notes:</string>
+    <string name="new_note">New Note</string>
     <string name="note_hint">Note description</string>
     <string name="note_last_date">Modification Date</string>
 
