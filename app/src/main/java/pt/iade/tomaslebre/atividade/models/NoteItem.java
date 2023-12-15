@@ -1,6 +1,7 @@
 package pt.iade.tomaslebre.atividade.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -20,6 +21,21 @@ public class NoteItem implements Serializable {
         this.title = title;
         this.content = content;
         this.modificationDate = modificationDate;
+    }
+
+    public static ArrayList<NoteItem> List(){
+        ArrayList<NoteItem> items = new ArrayList<NoteItem>();
+
+        items.add(new NoteItem(1, "Note 1", "Content 1", new GregorianCalendar(2020, Calendar.APRIL, 1)));
+        items.add(new NoteItem(2, "Note 2", "Content 2", new GregorianCalendar(2020, Calendar.APRIL, 2)));
+        items.add(new NoteItem(3, "Note 3", "Content 3", new GregorianCalendar(2020, Calendar.APRIL, 3)));
+        items.add(new NoteItem(4, "Note 4", "Content 4", new GregorianCalendar(2020, Calendar.APRIL, 4)));
+
+        return items;
+    }
+
+    public static NoteItem GetById(int id){
+        return new NoteItem(id, "Note ", "Content ", new GregorianCalendar(2020, Calendar.APRIL, 1));
     }
 
     public int getId() {
