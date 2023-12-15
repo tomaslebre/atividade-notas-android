@@ -1,22 +1,30 @@
 package pt.iade.tomaslebre.atividade.models;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class NoteItem {
+public class NoteItem implements Serializable {
+    private int id;
     private String title;
     private String content;
-    private String modificationDate;
+    private Calendar creationDate;
+    private Calendar modificationDate;
 
     public NoteItem(){
-        this("","", " ");
+
+        this(1,"","", Calendar.getInstance() );
     }
-    public NoteItem(String title, String content, String modificationDate) {
+    public NoteItem(int id, String title, String content, Calendar modificationDate) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.modificationDate = modificationDate;
     }
 
+    public int getId() {
+        return id;
+    }
     public String getTitle() {
         return title;
     }
@@ -33,13 +41,14 @@ public class NoteItem {
         this.content = content;
     }
 
-    public String getModificationDate() {
+    public Calendar getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(String modificationDate) {
+    public void setModificationDate(Calendar modificationDate) {
         this.modificationDate = modificationDate;
     }
+
 }
 
 

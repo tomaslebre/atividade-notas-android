@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import pt.iade.tomaslebre.atividade.models.NoteItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.new_note){
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+
+            intent.putExtra("item", new NoteItem());
+
             startActivity(intent);
 
             return true;
