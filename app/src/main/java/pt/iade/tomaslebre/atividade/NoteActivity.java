@@ -21,6 +21,8 @@ public class NoteActivity extends AppCompatActivity {
     protected EditText titleEdit;
     protected EditText contentEdit;
     protected TextView dateEdit;
+
+    protected  int listPosition;
     protected NoteItem item;
 
 
@@ -30,6 +32,7 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
 
         Intent intent = getIntent();
+        listPosition = intent.getIntExtra("position", -1);
         item = (NoteItem) intent.getSerializableExtra("item");
 
         setupComponents();
@@ -44,8 +47,15 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.save_note){
-            finish();
+            commitView();
+            this.item.save();
 
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("position", this.listPosition);
+            returnIntent.putExtra("item", this.item);
+            setResult(AppCompatActivity.RESULT_OK, returnIntent);
+
+            finish();
             return true;
         }else if(item.getItemId() == R.id.note_delete){
             finish();
@@ -70,5 +80,10 @@ public class NoteActivity extends AppCompatActivity {
         titleEdit.setText(item.getTitle());
         contentEdit.setText(item.getContent());
         dateEdit.setText(new SimpleDateFormat("dd-MM-yyyy").format(item.getModificationDate().getTime()));
+    }
+    protected void commitView(){
+        item.setTitle(titleEdit.getText().toString());
+        item.setContent(contentEdit.getText().toString());
+        item.setModificationDate(new GregorianCalendar());
     }
 }

@@ -23,7 +23,7 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
         this.items = items;
         clickListener = null;
     }
-    public void setClickListener(ItemClickListener listener){
+    public void setOnClickListener(ItemClickListener listener){
         clickListener = listener;
     }
 
