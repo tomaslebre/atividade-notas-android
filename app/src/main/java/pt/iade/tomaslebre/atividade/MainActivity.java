@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import pt.iade.tomaslebre.atividade.adapters.NoteItemAdapter;
 import pt.iade.tomaslebre.atividade.models.NoteItem;
 
 public class MainActivity extends AppCompatActivity {
     protected RecyclerView itemsListView;
+    protected NoteItemAdapter itemsAdapter;
     protected ArrayList<NoteItem> itemsList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.toolbar));
 
+        itemsAdapter = new NoteItemAdapter(this, itemsList);
+
         itemsListView = (RecyclerView) findViewById(R.id.note_list);
         itemsListView.setLayoutManager(new LinearLayoutManager(this));
+        itemsListView.setAdapter(itemsAdapter);
     }
 }
