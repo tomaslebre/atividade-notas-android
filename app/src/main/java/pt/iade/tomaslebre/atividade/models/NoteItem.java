@@ -15,7 +15,7 @@ public class NoteItem implements Serializable {
 
     public NoteItem(){
 
-        this(1,"","", Calendar.getInstance() );
+        this(0,"","", Calendar.getInstance() );
     }
     public NoteItem(int id, String title, String content, Calendar modificationDate) {
         this.id = id;

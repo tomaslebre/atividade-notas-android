@@ -15,12 +15,13 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import pt.iade.tomaslebre.atividade.models.NoteItem;
 public class NoteActivity extends AppCompatActivity {
     protected EditText titleEdit;
     protected EditText contentEdit;
-    protected TextView dateEdit;
+    protected EditText dateEdit;
 
     protected  int listPosition;
     protected NoteItem item;
@@ -48,6 +49,8 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.save_note){
             commitView();
+            String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(this.item.getModificationDate().getTime());
+            dateEdit.setText(formattedDate);
             this.item.save();
 
             Intent returnIntent = new Intent();
@@ -58,9 +61,13 @@ public class NoteActivity extends AppCompatActivity {
             finish();
             return true;
         }else if(item.getItemId() == R.id.note_delete){
-            finish();
+            // Set the result for deletion and include the position of the item to delete
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("position", this.listPosition);
+                setResult(MainActivity.RESULT_DELETE, returnIntent);
 
-            return true;
+                finish(); // This will close the current activity and go back to MainActivity
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -71,7 +78,7 @@ public class NoteActivity extends AppCompatActivity {
 
         titleEdit = (EditText) findViewById(R.id.note_title);
         contentEdit = (EditText) findViewById(R.id.notes_edit);
-        dateEdit = (TextView) findViewById(R.id.note_date);
+        dateEdit = (EditText) findViewById(R.id.note_date);
 
 
         populateView();

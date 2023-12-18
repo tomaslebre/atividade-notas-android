@@ -22,6 +22,7 @@ import pt.iade.tomaslebre.atividade.models.NoteItem;
 
 public class MainActivity extends AppCompatActivity {
     private static final int EDITOR_ACTIVITY_RETURN_ID = 1;
+    public static final int RESULT_DELETE = 2;
     protected RecyclerView itemsListView;
     protected NoteItemAdapter itemsAdapter;
     protected ArrayList<NoteItem> itemsList;
@@ -74,8 +75,15 @@ public class MainActivity extends AppCompatActivity {
                     itemsAdapter.notifyItemChanged(position);
                 }
 
+            }else if (resultCode == RESULT_DELETE) {
+                int positionToDelete = data.getIntExtra("position", -1);
+                if (positionToDelete != -1) {
+                    itemsList.remove(positionToDelete);
+                    itemsAdapter.notifyItemRemoved(positionToDelete);
+                }
             }
         }
+
     }
 
     private void setupComponents() {
