@@ -65,16 +65,18 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == EDITOR_ACTIVITY_RETURN_ID){
             if(resultCode == AppCompatActivity.RESULT_OK){
                 int position = data.getIntExtra("position", -1);
-                NoteItem updateItem = (NoteItem) data.getSerializableExtra("item");
+                NoteItem updatedItem = (NoteItem) data.getSerializableExtra("item");
 
-                if(position == -1){
-                    itemsList.add(updateItem);
+                if (position == -1) {
+                    itemsList.add(updatedItem);
                     itemsAdapter.notifyItemInserted(itemsList.size() - 1);
-                }else{
-                    itemsList.set(position, updateItem);
-                    itemsAdapter.notifyItemChanged(position);
+                } else {
+                    // Verifica se a nota foi realmente alterada antes de atualizar
+                    if (!itemsList.get(position).isSameAs(updatedItem)) {
+                        itemsList.set(position, updatedItem);
+                        itemsAdapter.notifyItemChanged(position);
+                    }
                 }
-
             }else if (resultCode == RESULT_DELETE) {
                 int positionToDelete = data.getIntExtra("position", -1);
                 if (positionToDelete != -1) {

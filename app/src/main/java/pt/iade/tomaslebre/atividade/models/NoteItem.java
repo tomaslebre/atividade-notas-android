@@ -24,6 +24,10 @@ public class NoteItem implements Serializable {
         this.modificationDate = modificationDate;
     }
 
+    public boolean isSameAs(NoteItem otherNote) {
+        return this.title.equals(otherNote.title) && this.content.equals(otherNote.content);
+    }
+
     public static ArrayList<NoteItem> List(){
         ArrayList<NoteItem> items = new ArrayList<NoteItem>();
 
