@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        itemsList = NoteItem.List();
 
         setupComponents();
     }
@@ -92,21 +91,28 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        itemsAdapter = new NoteItemAdapter(this, itemsList);
-        itemsAdapter.setOnClickListener(new NoteItemAdapter.ItemClickListener(){
+        NoteItem.List(new NoteItem.ListResponse(){
             @Override
-            public void onItemClick(View view, int position){
-                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("item", itemsList.get(position));
+            public void response(ArrayList<NoteItem> items){
+                itemsList = items;
 
-                startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+                itemsAdapter = new NoteItemAdapter(MainActivity.this, itemsList);
+                itemsAdapter.setOnClickListener(new NoteItemAdapter.ItemClickListener(){
+                    @Override
+                    public void onItemClick(View view, int position){
+                        Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("item", itemsList.get(position));
+
+                        startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+                    }
+
+                });
+
+                itemsListView = (RecyclerView) findViewById(R.id.note_list);
+                itemsListView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                itemsListView.setAdapter(itemsAdapter);
             }
-
         });
-
-        itemsListView = (RecyclerView) findViewById(R.id.note_list);
-        itemsListView.setLayoutManager(new LinearLayoutManager(this));
-        itemsListView.setAdapter(itemsAdapter);
     }
 }
